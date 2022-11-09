@@ -9,7 +9,7 @@ namespace SMS.model
         public string PhoneNumber { get; set; }
         public string Pin { get; set; }
         public string StaffId;
-        public User(int id, string firstName, string lastName, string staffId, string email, string phoneNumber, string pin)
+        public User(int id, string staffId, string firstName, string lastName, string email, string phoneNumber, string pin)
         {
             Id = id;
             FirstName = firstName;
@@ -18,6 +18,14 @@ namespace SMS.model
             Email = email;
             PhoneNumber = phoneNumber;
             Pin = pin;
+        }
+         public static string GenerateRandomId()
+        {
+            string alphabet = "abcdefghijklmnopqrstuvwxyz".ToUpper();
+            int r1 = new Random().Next(25);
+            int r2 = new Random().Next(25);
+            string staffId = $"A{alphabet[r1]}{alphabet[r2]}" + new Random().Next(1100000).ToString();
+            return staffId;
         }
     }
 }

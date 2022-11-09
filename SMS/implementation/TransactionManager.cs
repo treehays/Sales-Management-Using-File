@@ -81,15 +81,12 @@ namespace SMS.implementation
             }
             using (StreamReader streamReader = new StreamReader(transactionFilePath))
             {
-                while (streamReader.Peek() > -1)
+                while (streamReader.Peek() != -1)
                 {
                     string transactionManager = streamReader.ReadLine();
                     listOfTransaction.Add(Transactiona.ConvertToTransaction(transactionManager));
                 }
             }
         }
-        // public void GetTransaction(String barCode)
-        // {
-        // }
     }
 }

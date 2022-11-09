@@ -92,7 +92,7 @@ namespace SMS.implementation
             }
             using (StreamReader streamReader = new StreamReader(productFilePath))
             {
-                while (streamReader.Peek() > -1)
+                while (streamReader.Peek() != -1)
                 {
                     string productManager = streamReader.ReadLine();
                     listOfProduct.Add(Product.ConvertToProduct(productManager));

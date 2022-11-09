@@ -16,19 +16,26 @@ namespace SMS.menu
             attendantManager.ReadFromFile();
             productManager.ReadFromFile();
             transactionManager.ReadFromFile();
-
             do
             {
                 // Console.Clear();
-                Console.WriteLine("\n>>Main Menu");
-                Console.WriteLine("Welcome..\nAZ Sales Management System. \nEnter valid option.");
-                Console.WriteLine("Enter 1 to Register.\nEnter 2 to Login.\n0 to Close.");
+                // Console.WriteLine("\n>>Main Menu");
+                Console.WriteLine(@"
+################################################################################
+####>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>####
+####________________________________________________________________________####
+####    Welcome to AZ Sales Management System. Enter valid option.          ####
+####------------------------------------------------------------------------####
+####>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>####
+################################################################################");
+                Console.WriteLine("\tHome>>");
+                Console.WriteLine("\tEnter 1 to Register.\n\tEnter 2 to Login.\n\tEnter 0 to Close.");
                 bool chk = false;
                 do
                 {
+                    Console.Write("Enter Operation No: ");
                     chk = int.TryParse(Console.ReadLine(), out choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
-                    
                 } while (!chk);
                 if (choice == 1)
                 {
@@ -52,31 +59,21 @@ namespace SMS.menu
         }
         public void RegistrationMenu()
         {
-
             do
             {
-                Console.WriteLine("\nMain Menu >> Register >>");
-                // Console.WriteLine("Enter 1 for Admin.\nEnter 2 for Attendant. \nEnter 3 for Customer. \nEnter 4 to go back.");
-                Console.WriteLine("Enter 1 Go back to Main Menu. or \nEnter Your OneTime Registration Code for  Newly Employed Manager..");
-                
+                Console.WriteLine("\nHome >> Register >>");
+                Console.WriteLine("\tEnter 1 Go back to Go Home. or \n\tEnter Your OneTime Registration Code for  Newly Employed Manager..");
                 bool chk = false;
                 do
                 {
+                    Console.Write("Enter Operation No: ");
                     chk = int.TryParse(Console.ReadLine(), out choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
-                    
+
                 } while (!chk);
-                
-                // while (!int.TryParse(Console.ReadLine(), out choice))
-                // {
-                //     // Console.Clear();
-                //     Console.WriteLine("Invalid Input\n");
-                //     RegistrationMenu();
-                // }
                 if (choice == 2546)
                 {
                     // Admin
-                    Console.WriteLine("\nMain Menu >> Register >> Admin");
                     AdminMenu adminMenu = new AdminMenu();
                     adminMenu.RegisterAdminPage();
                 }
@@ -115,26 +112,19 @@ namespace SMS.menu
         {
             do
             {
-                Console.WriteLine("\nMain Menu >> Login >> ");
-                Console.WriteLine("Enter 1 for Admin.\nEnter 2 for Attendant. \nEnter 3 for Customer. \nEnter 4 to go back to Main Menu.\nEnter 0 to Close");
-                // Console.WriteLine("Enter 1 for Admin.\nEnter 2 for Attendant. \nEnter 3 for Customer. \nEnter 4 to go back to Main Menu.\nEnter 0 to Close");
-               bool chk = false;
+                Console.WriteLine("\n\tHome>> Login >> ");
+                Console.WriteLine("\tEnter 1 for Admin.\n\tEnter 2 for Attendant. \n\tEnter 3 for Customer. \n\tEnter 4 to go back to Main Menu.\n\tEnter 0 to Close");
+                bool chk = false;
                 do
                 {
+                    Console.Write("Enter Operation No: ");
                     chk = int.TryParse(Console.ReadLine(), out choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
-                    
                 } while (!chk);
-                // while (!int.TryParse(Console.ReadLine(), out choice))
-                // {
-                //     // Console.Clear();
-                //     Console.WriteLine("Invalid Input\n");
-                //     LoginMenu();
-                // }
                 if (choice == 1)
                 {
                     // Admin
-                    Console.WriteLine("\nMain Menu >> Login >> Admin");
+                    Console.WriteLine("\nHome >> Login >> Admin");
                     AdminMenu adminMenu = new AdminMenu();
                     adminMenu.LoginAdminMenu();
                 }

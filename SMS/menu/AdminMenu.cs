@@ -13,18 +13,19 @@ namespace SMS.menu
         public int choice;
         public void RegisterAdminPage()
         {
-            Console.WriteLine("Welcome...");
-            Console.Write("First name: ");
+            Console.WriteLine("\n\tHome >> Register >> Admin");
+            // Console.WriteLine("Welcome...");
+            Console.Write("\tFirst name: ");
             string firstName = Console.ReadLine();
-            Console.Write("Last name: ");
+            Console.Write("\tLast name: ");
             string lastName = Console.ReadLine();
-            Console.Write("Email: ");
+            Console.Write("\tEmail: ");
             string email = Console.ReadLine();
-            Console.Write("Phone Number: ");
+            Console.Write("\tPhone Number: ");
             string phoneNumber = Console.ReadLine();
-            Console.Write("pin: ");
+            Console.Write("\tpin: ");
             string pin = Console.ReadLine();
-            Console.Write("Post: ");
+            Console.Write("\tPost: ");
             string post = Console.ReadLine();
             iAdminManager.CreateAdmin(firstName, lastName, email, phoneNumber, pin, post);
             // LoginAdminMenu();
@@ -39,10 +40,10 @@ namespace SMS.menu
         }
         public void LoginAdminMenu()
         {
-            Console.WriteLine("Welcome.\nEnter your Staff ID and Password to login ");
-            Console.Write("Staff ID: ");
+            Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
+            Console.Write("\tStaff ID: ");
             string staffId = Console.ReadLine();
-            Console.Write("Pin: ");
+            Console.Write("\tPin: ");
             string pin = Console.ReadLine();
             // iAdminManager.Login(staffId,pin); waht is this doing not part of the code
             Admin admin = iAdminManager.Login(staffId, pin);
@@ -62,23 +63,26 @@ namespace SMS.menu
         {
             // int choice;
             // Console.Clear();
-            Console.WriteLine("\nMain Menu >> Login >> Admin >>");
-            Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
-            Console.WriteLine("Enter 1 to Manage Attendant.\nEnter 2 to Manage Products \nEnter 3 to Update My Details. \nEnter 4 to View sales Records.\nEnter 5 to check Wallet. \nEnter 6 to Logout.\nEnter 0 to Close.");
+            Console.WriteLine(@"
 
+################################################################################
+####>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>####
+####________________________________________________________________________####
+####    Welcome to AZ Sales Management System. Enter valid option.          ####
+####------------------------------------------------------------------------####
+####>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>####
+################################################################################");
+            Console.WriteLine("\nHome >> Login >> Admin >>");
+            // Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
+            Console.WriteLine("\tEnter 1 to Manage Attendant.\n\tEnter 2 to Manage Products \n\tEnter 3 to Update My Details. \n\tEnter 4 to View sales Records.\n\tEnter 5 to check Wallet. \n\tEnter 6 to Logout.\n\tEnter 0 to Close.");
             bool chk = false;
             do
             {
+                Console.Write("Enter Operation No: ");
                 chk = int.TryParse(Console.ReadLine(), out choice);
                 Console.WriteLine(chk ? "" : "Invalid Input.");
 
             } while (!chk);
-            // while (!int.TryParse(Console.ReadLine(), out choice))
-            // {
-            //     // Console.Clear();
-            //     Console.WriteLine("Invalid Input\n");
-            //     AdminSubMenu();
-            // }
             switch (choice)
             {
                 case 0:
@@ -122,23 +126,15 @@ namespace SMS.menu
         public void ManageAttendantSubMenu()
         {
             Console.WriteLine("\n...>> Admin >> Manage Attendants >>");
-            Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
-            Console.WriteLine("Enter 1 to Create Attendant.\nEnter 2 to View all attendants. \nEnter 3 to Delete Attendant.\nEnter 4 to Logout.\nEnter 0 to Close.");
-
+            // Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
+            Console.WriteLine("\tEnter 1 to Create Attendant.\n\tEnter 2 to View all attendants. \n\tEnter 3 to Delete Attendant.\n\tEnter 4 to Logout.\n\tEnter 0 to Close.");
             bool chk = false;
             do
             {
+                Console.Write("Enter Operation No: ");
                 chk = int.TryParse(Console.ReadLine(), out choice);
                 Console.WriteLine(chk ? "" : "Invalid Input.");
-
             } while (!chk);
-            // int choice;
-            // while (!int.TryParse(Console.ReadLine(), out choice))
-            // {
-            //     // Console.Clear();
-            //     Console.WriteLine("Invalid Input\n");
-            //     AdminSubMenu();
-            // }
             switch (choice)
             {
                 case 0:
