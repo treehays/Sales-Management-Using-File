@@ -55,7 +55,7 @@ namespace SMS.implementation
             Product product = GetProduct(barCode);
             if (product != null)
             {
-                // product.BarCode = barCode;
+                // product.BarCode  = barCode;
                 product.ProductName = productName;
                 product.Price = price;
                 ReWriteToFile();

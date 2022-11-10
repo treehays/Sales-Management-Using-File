@@ -12,7 +12,7 @@ namespace SMS.model
         public string WriteToFIle()
         {
             // 3Nc043d&.R342)wsdj1T733h2y future encoding
-            return $"Id%%%%%{StaffId}%%%%%{FirstName}%%%%%{LastName}%%%%%{Email}%%%%%{PhoneNumber}%%%%%{Pin}%%%%%{Post}";
+            return $"{Id}%%%%%{StaffId}%%%%%{FirstName}%%%%%{LastName}%%%%%{Email}%%%%%{PhoneNumber}%%%%%{Pin}%%%%%{Post}";
         }
 
         public static Admin ConvertToAdmin(string adminAllFromText)

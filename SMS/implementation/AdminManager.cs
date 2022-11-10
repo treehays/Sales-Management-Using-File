@@ -76,6 +76,7 @@ namespace SMS.implementation
                 admin.FirstName = firstName;
                 admin.LastName = lastName;
                 admin.PhoneNumber = phoneNumber;
+                admin.Post = post;
                 ReWriteToFile();
             }
             else
@@ -86,7 +87,7 @@ namespace SMS.implementation
         public void ReWriteToFile()
         {
             File.WriteAllText(adminFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(adminFilePath, append: false))
+            using (StreamWriter streamWriter = new StreamWriter(adminFilePath))
             {
                 foreach (var item in listOfAdmin)
                 {
