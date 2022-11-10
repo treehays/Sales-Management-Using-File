@@ -64,7 +64,7 @@ namespace SMS.implementation
         public void ReWriteToFile()
         {
             File.WriteAllText(transactionFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(transactionFilePath, append: true))
+            using (StreamWriter streamWriter = new StreamWriter(transactionFilePath))
             {
                 foreach (var item in listOfTransaction)
                 {

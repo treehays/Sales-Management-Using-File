@@ -35,6 +35,7 @@ namespace SMS.implementation
             {
                 Console.WriteLine($"{attendant.FirstName} {attendant.LastName} Successfully deleted. ");
                 listOfAttendant.Remove(attendant);
+                ReWriteToFile();
             }
             else
             {
@@ -105,7 +106,7 @@ namespace SMS.implementation
         public void ReWriteToFile()
         {
             File.WriteAllText(attendantFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(attendantFilePath, append: true))
+            using (StreamWriter streamWriter = new StreamWriter(attendantFilePath))
             {
                 foreach (var item in listOfAttendant)
                 {

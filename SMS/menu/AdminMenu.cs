@@ -34,9 +34,10 @@ namespace SMS.menu
         }
         public void DeleteAttendantMenu()
         {
-            Console.Write("Enter Staff ID of the Attendant.");
+            Console.Write("Enter Staff ID of the Attendant: ");
             string staffId = Console.ReadLine();
             iAttendantManager.DeleteAttendant(staffId);
+            ManageAttendantSubMenu();
         }
         public void LoginAdminMenu()
         {
@@ -100,6 +101,7 @@ namespace SMS.menu
                     break;
                 case 3:
                     // Update detail
+                    UpdateAdmin();
                     break;
                 case 4:
                     // View Sales Records
@@ -127,7 +129,7 @@ namespace SMS.menu
         {
             Console.WriteLine("\n...>> Admin >> Manage Attendants >>");
             // Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
-            Console.WriteLine("\tEnter 1 to Create Attendant.\n\tEnter 2 to View all attendants. \n\tEnter 3 to Delete Attendant.\n\tEnter 4 to Logout.\n\tEnter 0 to Close.");
+            Console.WriteLine("\tEnter 1 to Create Attendant.\n\tEnter 2 to View all attendants. \n\tEnter 3 to Delete Attendant.\n\tEnter 4 to Logout.\n\tEnter 0 to Close.\n\tEnter Any key to goback.");
             bool chk = false;
             do
             {
@@ -172,6 +174,58 @@ namespace SMS.menu
             string barCode = Console.ReadLine();
             iProductManager.DeleteProduct(barCode);
         }
+        public void UpdateAdmin()
+        {
+            Console.Write("Enter StaffId: ");
+            string staffId = Console.ReadLine().Trim();
+           Admin admin = iAdminManager.GetAdmin(staffId);
+            if (admin != null)
+            {
+                Console.Write("Update First Name: ");
+                string firstName = Console.ReadLine();
+                
+                Console.Write("Update Last Name: ");
+                string lastName = Console.ReadLine();
+                
+                Console.Write("Enter new Post: ");
+                string post = Console.ReadLine();
+                
+                Console.Write("Update Phone number: ");
+                string phoneNumber = Console.ReadLine();
+                
+                iAdminManager.UpdateAdmin(staffId,firstName,lastName,phoneNumber,post);
+                // product.ProductName = productName;
+                // adminToUpdate.LastName = lastName;
+                Console.WriteLine($"{firstName} successfully updated. ");
+            }
+            else
+            {
+                Console.WriteLine($"{staffId} not found");
+            }
+        }
+        public void UpdateProduct()
+        {
+            Console.Write("Enter Barcode of thte product: ");
+            string barCode = Console.ReadLine().Trim();
+            Product product = iProductManager.GetProduct(barCode);
+            if (product != null)
+            {
+                Console.Write("Update Product Name: ");
+                string productName = Console.ReadLine();
+                Console.Write("Update Price: ");
+                double price = double.Parse(Console.ReadLine());
+                // Console.Write("Update Quantity: ");
+                // barCode = Console.ReadLine();
+                iProductManager.UpdateProduct(barCode, productName, price);
+                // product.ProductName = productName;
+                // adminToUpdate.LastName = lastName;
+                Console.WriteLine($"{productName} successfully updated. ");
+            }
+            else
+            {
+                Console.WriteLine($"{barCode} not found");
+            }
+        }
         public void AddProduct()
         {
             Console.Write("Product Name: ");
@@ -197,7 +251,7 @@ namespace SMS.menu
         {
             Console.WriteLine("\n...>> Admin >> Manage Product >>");
             Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
-            Console.WriteLine("Enter 1 to Add a product1. \nEnter 3  to View all Products. \nEnter 4 to Delete Product.\nEnter 5 to Go Back to Admin Menu\nEnter 6 to Logout.\nEnter 0 to Close.");
+            Console.WriteLine("Enter 1 to Add a product1. \nEnter 2 to Update Product details. \nEnter 3  to View all Products. \nEnter 4 to Delete Product.\nEnter 5 to Go Back to Admin Menu\nEnter 6 to Logout.\nEnter 0 to Close.");
 
             bool chk = false;
             do
@@ -225,11 +279,12 @@ namespace SMS.menu
                     AddProduct();
                     ManageProductSubMenu();
                     break;
-                // case 2:
-                // Modify product
-                //  Console.WriteLine("Attendant Details.");
-                // AttendantManager attendantManager = new AttendantManager();
-                // attendantManager.ViewAttendant(attendant.StaffId);
+                case 2:
+                    // Modify product
+                    Console.WriteLine("Update Product details.");
+                    UpdateProduct();
+                    ManageProductSubMenu();
+                    break;
 
                 // break;
                 case 3:

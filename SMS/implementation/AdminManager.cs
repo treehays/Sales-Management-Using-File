@@ -68,7 +68,7 @@ namespace SMS.implementation
             }
             return null;
         }
-        public void UpdateAdmin(string staffId, string firstName, string lastName, string phoneNumber)
+        public void UpdateAdmin(string staffId, string firstName, string lastName, string phoneNumber,string post)
         {
             Admin admin = GetAdmin(staffId);
             if (admin != null)
@@ -76,6 +76,7 @@ namespace SMS.implementation
                 admin.FirstName = firstName;
                 admin.LastName = lastName;
                 admin.PhoneNumber = phoneNumber;
+                ReWriteToFile();
             }
             else
             {
@@ -85,7 +86,7 @@ namespace SMS.implementation
         public void ReWriteToFile()
         {
             File.WriteAllText(adminFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(adminFilePath, append: true))
+            using (StreamWriter streamWriter = new StreamWriter(adminFilePath, append: false))
             {
                 foreach (var item in listOfAdmin)
                 {

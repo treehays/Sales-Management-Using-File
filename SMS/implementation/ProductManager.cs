@@ -39,7 +39,6 @@ namespace SMS.implementation
                 Console.WriteLine("Product not found.");
             }
         }
-
         public Product GetProduct(string barCode)
         {
             foreach (var item in listOfProduct)
@@ -56,9 +55,10 @@ namespace SMS.implementation
             Product product = GetProduct(barCode);
             if (product != null)
             {
-                product.BarCode = barCode;
+                // product.BarCode = barCode;
                 product.ProductName = productName;
                 product.Price = price;
+                ReWriteToFile();
             }
             else
             {
@@ -75,7 +75,7 @@ namespace SMS.implementation
         public void ReWriteToFile()
         {
             File.WriteAllText(productFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(productFilePath, append: true))
+            using (StreamWriter streamWriter = new StreamWriter(productFilePath))
             {
                 foreach (var item in listOfProduct)
                 {
