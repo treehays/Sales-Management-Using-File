@@ -101,7 +101,9 @@ namespace SMS.menu
                     break;
                 case 3:
                     // Update detail
+                    Console.WriteLine("Update details.");
                     UpdateAdmin();
+                    AdminSubMenu();
                     break;
                 case 4:
                     // View Sales Records
@@ -178,29 +180,31 @@ namespace SMS.menu
         {
             Console.Write("Enter StaffId: ");
             string staffId = Console.ReadLine().Trim();
-           Admin admin = iAdminManager.GetAdmin(staffId);
+            Admin admin = iAdminManager.GetAdmin(staffId);
             if (admin != null)
             {
                 Console.Write("Update First Name: ");
                 string firstName = Console.ReadLine();
-                
+
                 Console.Write("Update Last Name: ");
                 string lastName = Console.ReadLine();
-                
+
                 Console.Write("Enter new Post: ");
                 string post = Console.ReadLine();
-                
+
                 Console.Write("Update Phone number: ");
                 string phoneNumber = Console.ReadLine();
-                
-                iAdminManager.UpdateAdmin(staffId,firstName,lastName,phoneNumber,post);
+
+                iAdminManager.UpdateAdmin(staffId, firstName, lastName, phoneNumber, post);
                 // product.ProductName = productName;
                 // adminToUpdate.LastName = lastName;
                 Console.WriteLine($"{firstName} successfully updated. ");
+                // AdminSubMenu();
             }
             else
             {
                 Console.WriteLine($"{staffId} not found");
+                // AdminSubMenu();
             }
         }
         public void UpdateProduct()
@@ -220,10 +224,12 @@ namespace SMS.menu
                 // product.ProductName = productName;
                 // adminToUpdate.LastName = lastName;
                 Console.WriteLine($"{productName} successfully updated. ");
+                // ManageProductSubMenu();
             }
             else
             {
                 Console.WriteLine($"{barCode} not found");
+                // ManageProductSubMenu();
             }
         }
         public void AddProduct()

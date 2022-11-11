@@ -68,7 +68,7 @@ namespace SMS.implementation
             }
             return null;
         }
-        public void UpdateAdmin(string staffId, string firstName, string lastName, string phoneNumber,string post)
+        public void UpdateAdmin(string staffId, string firstName, string lastName, string phoneNumber, string post)
         {
             Admin admin = GetAdmin(staffId);
             if (admin != null)
@@ -84,10 +84,11 @@ namespace SMS.implementation
                 Console.WriteLine("User not found.");
             }
         }
+
         public void ReWriteToFile()
         {
             File.WriteAllText(adminFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(adminFilePath))
+            using (StreamWriter streamWriter = new StreamWriter(adminFilePath, append: false))
             {
                 foreach (var item in listOfAdmin)
                 {
