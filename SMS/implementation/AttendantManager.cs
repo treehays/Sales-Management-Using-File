@@ -46,7 +46,7 @@ namespace SMS.implementation
         {
             foreach (var item in listOfAttendant)
             {
-                if (item.StaffId == staffId)
+                if (item.StaffId.ToUpper() == staffId.ToUpper())
                 {
                     return item;
                 }
@@ -57,7 +57,7 @@ namespace SMS.implementation
         {
             foreach (var item in listOfAttendant)
             {
-                if (item.StaffId == staffId || item.Email == email)
+                if (item.StaffId.ToUpper() == staffId.ToUpper() || item.Email.ToUpper() == email.ToUpper())
                 {
                     return item;
                 }

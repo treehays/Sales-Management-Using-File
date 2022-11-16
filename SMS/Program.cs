@@ -9,10 +9,12 @@ namespace SMS
     {
         static void Main(string[] args)
         {
-            AdminManager adminManager = new AdminManager();
-            adminManager.ReadFromFile();
+            // AdminManager adminManager = new AdminManager();
+            // adminManager.ReadFromFile();
             MainMenu mainMenu = new MainMenu();
             mainMenu.AllMainMenu();
+            // var pro = new AttendantMenu();
+            // pro.ViewAllProductRanges();
 
 
         }

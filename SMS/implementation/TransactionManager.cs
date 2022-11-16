@@ -23,13 +23,21 @@ namespace SMS.implementation
             }
             else
             {
-                Transactiona transaction = new Transactiona(id, receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
-                listOfTransaction.Add(transaction);
-                using (StreamWriter streamWriter = new StreamWriter(transactionFilePath, append: true))
+                var transaction = new Transactiona(id, receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
+                bool isAvailable = iProductManager.UpdateProductInventory(barCode, quantity);
+                if (isAvailable)
                 {
-                    streamWriter.WriteLine(transaction.WriteToFIle());
+                    listOfTransaction.Add(transaction);
+                    using (StreamWriter streamWriter = new StreamWriter(transactionFilePath, append: true))
+                    {
+                        streamWriter.WriteLine(transaction.WriteToFIle());
+                    }
+                    Console.WriteLine($"Transaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode} \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
                 }
-                Console.WriteLine($"Transaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode} \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
+                else
+                {
+                    Console.WriteLine($"Out of stock!!!. \nStock remaining {product.ProductQuantity}");
+                }
             }
 
         }

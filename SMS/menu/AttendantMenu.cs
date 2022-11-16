@@ -38,9 +38,9 @@ namespace SMS.menu
         {
             Console.WriteLine("\nWelcome.\nEnter your Staff ID and Password to login ");
             Console.Write("Staff ID: ");
-            string staffId = Console.ReadLine();
+            string staffId = "AYO715570";// Console.ReadLine();
             Console.Write("Pin: ");
-            string pin = Console.ReadLine();
+            string pin = "password";//Console.ReadLine();
             Attendant attendant = iAttendantManager.Login(staffId, pin);
             if (attendant != null)
             {
@@ -58,10 +58,9 @@ namespace SMS.menu
             do
             {
                 // Console.Clear();
-                Console.WriteLine("...Logged >> Attendant >>");
-
-                Console.WriteLine("\nAZ Sales Management System. \nEnter valid option.");
-                Console.WriteLine("Enter 1 to Record Sales.\nEnter 2 to Update My Details. \nEnter 3 to View history.\nEnter 4 to Logout.\nEnter 0 to Close.");
+                Console.WriteLine("\n...Logged >> Attendant >>");
+                Console.WriteLine("AZ Sales Management System. \nEnter valid option.");
+                Console.WriteLine("Enter 1 to Record Sales.\nEnter 2 view all products.\nEnter 3 to Update personal Details.\nEnter 4 view product below range.  \nEnter 5 to View Sales history.\nEnter 6 view out of stock products.\nEnter 6 to Logout.\nEnter 0 to Close.");
                 bool chk = false;
                 do
                 {
@@ -83,8 +82,11 @@ namespace SMS.menu
                 }
                 else if (choice == 2)
                 {
+                }
+                else if (choice == 3)
+                {
                     // Update detail
-                    Console.WriteLine("\nWelcome.\nEnter D");
+                    Console.WriteLine("\nWelcome.");
                     Console.Write("First Name: ");
                     string firstName = Console.ReadLine();
                     Console.Write("Last Name: ");
@@ -92,16 +94,19 @@ namespace SMS.menu
                     Console.Write("Phone Number: ");
                     string phoneNumber = Console.ReadLine();
                     iAttendantManager.UpdateAttendant(attendant.StaffId, firstName, lastName, phoneNumber);
-                }
-                else if (choice == 3)
-                {
-                    //View Transaction History
-                    // View Sales Sales Records
-                    Console.WriteLine("\nID\tSTAFF\tFIRST NAME\tLAST NAME\tEMAIL\tPHONE NO");
 
-                    iTransactionManager.GetAllTransactions();
                 }
                 else if (choice == 4)
+                {
+                    ViewAllProductRanges();
+                     AttendantSubMenu(attendant);
+                }
+                else if (choice == 5)
+                {
+                    Console.WriteLine("\nID\tSTAFF\tFIRST NAME\tLAST NAME\tEMAIL\tPHONE NO");
+                    iTransactionManager.GetAllTransactions();
+                }
+                else if (choice == 6)
                 {
                     // logout
                     // LoginAttendantMenu();
@@ -109,6 +114,13 @@ namespace SMS.menu
                     mainMenu.LoginMenu();
                 }
             } while (choice != 0);
+        }
+        public void ViewAllProductRanges()
+        {
+            Console.WriteLine("\nWelcome.\nView product below price range.");
+            Console.Write("Enter highest Price range: ");
+            double price = double.Parse(Console.ReadLine());
+            iProductManager.ViewProductBelow(price);
         }
         public void MakeProductPayment()
         {

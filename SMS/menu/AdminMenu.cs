@@ -43,9 +43,9 @@ namespace SMS.menu
         {
             Console.WriteLine("\tWelcome.\n\tEnter your Staff ID and Password to login ");
             Console.Write("\tStaff ID: ");
-            string staffId = Console.ReadLine();
+            string staffId = "AYE123456";//Console.ReadLine();
             Console.Write("\tPin: ");
-            string pin = Console.ReadLine();
+            string pin = "pin"; //Console.ReadLine();
             // iAdminManager.Login(staffId,pin); waht is this doing not part of the code
             Admin admin = iAdminManager.Login(staffId, pin);
             if (admin != null)
@@ -131,7 +131,7 @@ namespace SMS.menu
         {
             Console.WriteLine("\n...>> Admin >> Manage Attendants >>");
             // Console.WriteLine("\nAZn Sales Management System. \nEnter valid option.");
-            Console.WriteLine("\tEnter 1 to Create Attendant.\n\tEnter 2 to View all attendants. \n\tEnter 3 to Delete Attendant.\n\tEnter 4 to Logout.\n\tEnter 0 to Close.\n\tEnter Any key to goback.");
+            Console.WriteLine("\tEnter 1 to Create Attendant.\n\tEnter 2 to View all attendants. \n\tEnter 3 to Delete Attendant.\n\tEnter 4 to Logout.\n\tEnter 5 to go back. \n\tEnter 0 to Close.\n\tEnter Any key to goback.");
             bool chk = false;
             do
             {
@@ -160,10 +160,15 @@ namespace SMS.menu
                     // Delete Attendants
                     DeleteAttendantMenu();
                     break;
+
                 case 4:
                     // logout
                     MainMenu mainMenu = new MainMenu();
                     mainMenu.LoginMenu();
+                    break;
+
+                case 5:
+                    AdminSubMenu();
                     break;
                 default:
                     ManageAttendantSubMenu();
@@ -209,7 +214,7 @@ namespace SMS.menu
         }
         public void UpdateProduct()
         {
-            Console.Write("Enter Barcode of thte product: ");
+            Console.Write("Enter Barcode of the product: ");
             string barCode = Console.ReadLine().Trim();
             Product product = iProductManager.GetProduct(barCode);
             if (product != null)
@@ -218,9 +223,10 @@ namespace SMS.menu
                 string productName = Console.ReadLine();
                 Console.Write("Update Price: ");
                 double price = double.Parse(Console.ReadLine());
-                // Console.Write("Update Quantity: ");
+                Console.Write("Update Quantity: ");
+                int quantity = int.Parse(Console.ReadLine());
                 // barCode = Console.ReadLine();
-                iProductManager.UpdateProduct(barCode, productName, price);
+                iProductManager.UpdateProduct(barCode, productName, price, quantity);
                 // product.ProductName = productName;
                 // adminToUpdate.LastName = lastName;
                 Console.WriteLine($"{productName} successfully updated. ");

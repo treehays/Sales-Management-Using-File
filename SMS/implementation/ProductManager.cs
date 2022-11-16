@@ -50,7 +50,7 @@ namespace SMS.implementation
             }
             return null;
         }
-        public void UpdateProduct(string barCode, string productName, double price)
+        public void UpdateProduct(string barCode, string productName, double price, int quantity)
         {
             Product product = GetProduct(barCode);
             if (product != null)
@@ -65,11 +65,37 @@ namespace SMS.implementation
                 Console.WriteLine("Product not found.");
             }
         }
+        public bool UpdateProductInventory(string barCode, int quantity)
+        {
+            Product product = GetProduct(barCode);
+
+            if (product.ProductQuantity - quantity >= 0)
+            {
+                product.ProductQuantity = product.ProductQuantity - quantity;
+                ReWriteToFile();
+                return true;
+            }
+            // else
+            // {
+            //     Console.WriteLine($"Out of stock!!!. \nStock remaining {product.ProductQuantity}");
+            //     return false;
+            // }
+            return false;
+        }
         public void ViewAllProduct()
         {
             foreach (var item in listOfProduct)
             {
                 Console.WriteLine($"{item.Id}\t{item.ProductName}\t{item.BarCode}\t{item.Price}\t{item.ProductQuantity}");
+            }
+        }
+        public void ViewProductBelow(double price)
+        {
+            var listOfProductBelow = from x in listOfProduct where x.Price < price select new { barcode = x.BarCode, productName = x.ProductName, price = x.Price };
+            foreach (var item in listOfProductBelow)
+            {
+                int i = 1;
+                Console.WriteLine($"{i++}\t{item.barcode}\t{item.productName}\t{item.price}");
             }
         }
         public void ReWriteToFile()
