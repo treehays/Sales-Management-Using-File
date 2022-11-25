@@ -6,24 +6,24 @@ namespace SMS.implementation
 {
     public class CustomerCartManager : ICustomerCartManager
     {
-        List<CustomerCart> listOfCustomerCart = new List<CustomerCart>();
-        IProductManager iProductManager = new ProductManager();
+        private readonly List<CustomerCart> _listOfCustomerCart = new List<CustomerCart>();
+        private readonly IProductManager _iProductManager = new ProductManager();
         public void AddToCart(string barCode, int quantity)
         {
-            Product product = iProductManager.GetProduct(barCode);
+            var product = _iProductManager.GetProduct(barCode);
 
-            CustomerCart customerCart = new CustomerCart(barCode, quantity);
-            listOfCustomerCart.Add(customerCart);
+            var customerCart = new CustomerCart(barCode, quantity);
+            _listOfCustomerCart.Add(customerCart);
         }
 
         public void RemoveFromCart(string barCode)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void UpdateCart(string barCode, int quantity)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }

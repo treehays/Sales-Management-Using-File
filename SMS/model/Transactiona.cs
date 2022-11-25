@@ -2,7 +2,7 @@ using System.Transactions;
 
 namespace SMS.model
 {
-    public class Transactiona
+    public class Transaction
     {
         public string ReceiptNo { get; set; }
         public int Id { get; set; }
@@ -12,7 +12,7 @@ namespace SMS.model
         public string BarCode { get; set; }
         public DateTime Datetime { get; set; }
         public double CashTender { get; set; }
-        public Transactiona(int id, string receiptNo, string barCode, int quantity, double total, string customerId, DateTime datetime, double cashTender)
+        public Transaction(int id, string receiptNo, string barCode, int quantity, double total, string customerId, DateTime datetime, double cashTender)
         {
             ReceiptNo = receiptNo;
             Id = id;
@@ -28,10 +28,10 @@ namespace SMS.model
             return $"{Id}%%%%%{ReceiptNo}%%%%%{BarCode}%%%%%{Quantity}%%%%%{Total}%%%%%{CustomerId}%%%%%{Datetime}%%%%%{CashTender}";
         }
 
-        public static Transactiona ConvertToTransaction(string transactionAllFromText)
+        public static Transaction ConvertToTransaction(string transactionAllFromText)
         {
-            string[] transactionConvert = transactionAllFromText.Split("%%%%%");
-            return new Transactiona(int.Parse(transactionConvert[0]), transactionConvert[1], transactionConvert[2], int.Parse(transactionConvert[3]), double.Parse(transactionConvert[4]), transactionConvert[5], DateTime.Parse(transactionConvert[6]), double.Parse(transactionConvert[7]));
+            var transactionConvert = transactionAllFromText.Split("%%%%%");
+            return new Transaction(int.Parse(transactionConvert[0]), transactionConvert[1], transactionConvert[2], int.Parse(transactionConvert[3]), double.Parse(transactionConvert[4]), transactionConvert[5], DateTime.Parse(transactionConvert[6]), double.Parse(transactionConvert[7]));
         }
     }
 }

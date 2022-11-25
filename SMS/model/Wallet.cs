@@ -2,10 +2,10 @@ namespace SMS.model
 {
     public class Wallet
     {
-        public int Id { get; set; }
-        public double WalletRemainingBalance { get; set; }
-        public double WalletTotal { get; set; }
-        public double WalletWithdrawal { get; set; }
+        private int Id { get; set; }
+        private double WalletRemainingBalance { get; set; }
+        private double WalletTotal { get; set; }
+        private double WalletWithdrawal { get; set; }
 
         public Wallet(int id, double walletTotal, double walletWithdrawal, double walletRemainingBalance)
         {

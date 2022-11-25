@@ -1,38 +1,40 @@
 using System.Transactions;
 using SMS.interfaces;
 using SMS.model;
+using Transaction = SMS.model.Transaction;
+
 namespace SMS.implementation
 {
     public class TransactionManager : ITransactionManager
     {
-        public string transactionFilePath = @"./Files/transaction.txt";
-        public static List<Transactiona> listOfTransaction = new List<Transactiona>();
+        private readonly string _transactionFilePath = @"./Files/transaction.txt";
+        public static List<Transaction> ListOfTransaction = new List<Transaction>();
         // public static List<Transactiona> listOfCart = new List<Transactiona>();
-        IProductManager iProductManager = new ProductManager();
+        private readonly IProductManager _iProductManager = new ProductManager();
         public void CreateTransaction(string barCode, int quantity, string customerId, double cashTender)
         {
-            Product product = iProductManager.GetProduct(barCode);
-            int id = listOfTransaction.Count() + 1;
-            string receiptNo = "ref" + new Random(id).Next(2323, 1000000).ToString();
-            double total = product.Price * quantity;
-            double xpectedChange = cashTender - total;
-            DateTime dateTime = DateTime.Now;
-            if (xpectedChange < 0)
+            var product = _iProductManager.GetProduct(barCode);
+            var id = ListOfTransaction.Count + 1;
+            var receiptNo = "ref" + new Random(id).Next(2323, 1000000).ToString();
+            var total = product.Price * quantity;
+            var expectedChange = cashTender - total;
+            var dateTime = DateTime.Now;
+            if (expectedChange < 0)
             {
                 Console.WriteLine($"You can't pay lower than {total}");
             }
             else
             {
-                var transaction = new Transactiona(id, receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
-                bool isAvailable = iProductManager.UpdateProductInventory(barCode, quantity);
+                var transaction = new Transaction(id, receiptNo, barCode, quantity, total, customerId, dateTime, cashTender);
+                var isAvailable = _iProductManager.UpdateProductInventory(barCode, quantity);
                 if (isAvailable)
                 {
-                    listOfTransaction.Add(transaction);
-                    using (StreamWriter streamWriter = new StreamWriter(transactionFilePath, append: true))
+                    ListOfTransaction.Add(transaction);
+                    using (var streamWriter = new StreamWriter(_transactionFilePath, append: true))
                     {
                         streamWriter.WriteLine(transaction.WriteToFIle());
                     }
-                    Console.WriteLine($"Transaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode} \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {xpectedChange}");
+                    Console.WriteLine($"Transaction Date: {dateTime} \tReceipt No: {receiptNo} \nBarcode: {product.BarCode} \nPrice Per Unit: {product.Price} \nQuantity:{quantity} \nTotal: {product.Price * quantity}\nCustomer ID:{customerId}.\nCustomer Change: {expectedChange}");
                 }
                 else
                 {
@@ -43,18 +45,13 @@ namespace SMS.implementation
         }
         public double CalculateTotalSales()
         {
-            double totalSales = 0;
-            foreach (var item in listOfTransaction)
-            {
-                totalSales = item.Total + totalSales;
-            }
-            return totalSales;
+            return ListOfTransaction.Aggregate<Transaction, double>(0, (current, item) => item.Total + current);
         }
         public void GetAllTransactions()
         {
             Console.WriteLine("\nID\t\tTRANS. DATE \tCUSTOMER NAME\tTOTAL AMOUNT\tBARCODE\tRECEIPT NO");
 
-            foreach (var item in listOfTransaction)
+            foreach (var item in ListOfTransaction)
             {
                 Console.WriteLine($"{item.Id}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}");
             }
@@ -63,7 +60,7 @@ namespace SMS.implementation
         public double GetAllTransactionsAdmin()
         {
             double cumulativeSum = 0;
-            foreach (var item in listOfTransaction)
+            foreach (var item in ListOfTransaction)
             {
                 Console.WriteLine($"{item.Id}\t{item.Datetime.ToString("d")}\t{item.CustomerId}\t{item.BarCode}\t{item.ReceiptNo}\t{item.Quantity}\t{item.Total}\t{cumulativeSum += item.Total}");
             }
@@ -71,10 +68,10 @@ namespace SMS.implementation
         }
         public void ReWriteToFile()
         {
-            File.WriteAllText(transactionFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(transactionFilePath))
+            File.WriteAllText(_transactionFilePath, string.Empty);
+            using (var streamWriter = new StreamWriter(_transactionFilePath))
             {
-                foreach (var item in listOfTransaction)
+                foreach (var item in ListOfTransaction)
                 {
                     streamWriter.WriteLine(item.WriteToFIle());
                 }
@@ -82,17 +79,17 @@ namespace SMS.implementation
         }
         public void ReadFromFile()
         {
-            if (!File.Exists(transactionFilePath))
+            if (!File.Exists(_transactionFilePath))
             {
-                FileStream fileStream = new FileStream(transactionFilePath, FileMode.CreateNew);
+                var fileStream = new FileStream(_transactionFilePath, FileMode.CreateNew);
                 fileStream.Close();
             }
-            using (StreamReader streamReader = new StreamReader(transactionFilePath))
+            using (var streamReader = new StreamReader(_transactionFilePath))
             {
                 while (streamReader.Peek() != -1)
                 {
-                    string transactionManager = streamReader.ReadLine();
-                    listOfTransaction.Add(Transactiona.ConvertToTransaction(transactionManager));
+                    var transactionManager = streamReader.ReadLine();
+                    ListOfTransaction.Add(Transaction.ConvertToTransaction(transactionManager));
                 }
             }
         }

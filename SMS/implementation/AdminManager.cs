@@ -4,18 +4,18 @@ namespace SMS.implementation
 {
     public class AdminManager : IAdminManager
     {
-        ITransactionManager iTransactionManager = new TransactionManager();
-        public static List<Admin> listOfAdmin = new List<Admin>();
-        public string adminFilePath = @"./Files/admin.txt";
-        public string fileDirect = @"./Files";
+        private ITransactionManager _iTransactionManager = new TransactionManager();
+        private static readonly List<Admin> _listOfAdmin = new List<Admin>();
+        private readonly string _adminFilePath = @"./Files/admin.txt";
+        private readonly string _fileDirect = @"./Files";
         public void CreateAdmin(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
         {
-            int id = listOfAdmin.Count() + 1;
+            var id = _listOfAdmin.Count() + 1;
             // string staffId = "AZ" + new Random(new Random().Next(1000)).Next(1100000).ToString();
 
-            Admin admin = new Admin(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
-            listOfAdmin.Add(admin);
-            using (StreamWriter streamWriter = new StreamWriter(adminFilePath, append: true))
+            var admin = new Admin(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
+            _listOfAdmin.Add(admin);
+            using (var streamWriter = new StreamWriter(_adminFilePath, append: true))
             {
                 streamWriter.WriteLine(admin.WriteToFIle());
             }
@@ -23,11 +23,11 @@ namespace SMS.implementation
         }
         public void DeleteAdmin(string staffId)
         {
-            Admin admin = GetAdmin(staffId);
+            var admin = GetAdmin(staffId);
             if (admin != null)
             {
                 Console.WriteLine($"{admin.FirstName} {admin.LastName} Successfully deleted. ");
-                listOfAdmin.Remove(admin);
+                _listOfAdmin.Remove(admin);
                 ReWriteToFile();
             }
             else
@@ -37,40 +37,19 @@ namespace SMS.implementation
         }
         public Admin GetAdmin(string staffId)
         {
-            foreach (var item in listOfAdmin)
-            {
-                if (item.StaffId == staffId)
-                {
-                    return item;
-                }
-            }
-            return null;
+            return _listOfAdmin.FirstOrDefault(item => item.StaffId == staffId);
         }
         public Admin GetAdmin(string staffId, string email)
         {
-            foreach (var item in listOfAdmin)
-            {
-                if (item.StaffId == staffId || item.Email == email)
-                {
-                    return item;
-                }
-            }
-            return null;
+            return _listOfAdmin.FirstOrDefault(item => item.StaffId == staffId || item.Email == email);
         }
         public Admin Login(string staffId, string pin)
         {
-            foreach (var item in listOfAdmin)
-            {
-                if (item.StaffId == staffId.ToUpper() && item.Pin == pin)
-                {
-                    return item;
-                }
-            }
-            return null;
+            return _listOfAdmin.FirstOrDefault(item => item.StaffId == staffId.ToUpper() && item.Pin == pin);
         }
         public void UpdateAdmin(string staffId, string firstName, string lastName, string phoneNumber, string post)
         {
-            Admin admin = GetAdmin(staffId);
+            var admin = GetAdmin(staffId);
             if (admin != null)
             {
                 admin.FirstName = firstName;
@@ -87,10 +66,10 @@ namespace SMS.implementation
 
         public void ReWriteToFile()
         {
-            File.WriteAllText(adminFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(adminFilePath, append: false))
+            File.WriteAllText(_adminFilePath, string.Empty);
+            using (var streamWriter = new StreamWriter(_adminFilePath, append: false))
             {
-                foreach (var item in listOfAdmin)
+                foreach (var item in _listOfAdmin)
                 {
                     streamWriter.WriteLine(item.WriteToFIle());
                 }
@@ -98,19 +77,19 @@ namespace SMS.implementation
         }
         public void ReadFromFile()
         {
-            if (!Directory.Exists(fileDirect)) Directory.CreateDirectory(fileDirect);
+            if (!Directory.Exists(_fileDirect)) Directory.CreateDirectory(_fileDirect);
 
-            if (!File.Exists(adminFilePath))
+            if (!File.Exists(_adminFilePath))
             {
-                var fileStream = new FileStream(adminFilePath, FileMode.CreateNew);
+                var fileStream = new FileStream(_adminFilePath, FileMode.CreateNew);
                 fileStream.Close();
             }
-            using (var streamReader = new StreamReader(adminFilePath))
+            using (var streamReader = new StreamReader(_adminFilePath))
             {
                 while (streamReader.Peek() != -1)
                 {
                     var adminManager = streamReader.ReadLine();
-                    listOfAdmin.Add(Admin.ConvertToAdmin(adminManager));
+                    _listOfAdmin.Add(Admin.ConvertToAdmin(adminManager));
                 }
             }
         }

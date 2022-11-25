@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\fmSales-Managment-system-\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS\\SMS.csproj",
+      "projectUniqueName": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\SMS_FILE\\SMS\\SMS.csproj",
       "projectName": "SMS",
-      "projectPath": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\fmSales-Managment-system-\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS\\SMS.csproj",
+      "projectPath": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\SMS_FILE\\SMS\\SMS.csproj",
       "packagesPath": "C:\\Users\\Treehays\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\fmSales-Managment-system-\\Sales-Managment-system-a9f7f5c5c01ade0e51bd3f89aa2856667084fafc\\SMS\\obj\\",
+      "outputPath": "C:\\Users\\Treehays\\Documents\\CLH\\New folder\\SMS_FILE\\SMS\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Treehays\\AppData\\Roaming\\NuGet\\NuGet.Config",

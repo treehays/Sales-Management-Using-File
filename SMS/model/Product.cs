@@ -22,7 +22,7 @@ namespace SMS.model
 
         public static Product ConvertToProduct(string productAllFromText)
         {
-            string[] productConvert = productAllFromText.Split("%%%%%");
+            var productConvert = productAllFromText.Split("%%%%%");
             return new Product(int.Parse(productConvert[0]), productConvert[1], productConvert[2], int.Parse(productConvert[3]), int.Parse(productConvert[4]));
         }
     }

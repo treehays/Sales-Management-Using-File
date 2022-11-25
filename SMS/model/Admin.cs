@@ -17,7 +17,7 @@ namespace SMS.model
 
         public static Admin ConvertToAdmin(string adminAllFromText)
         {
-            string[] adminConvert = adminAllFromText.Split("%%%%%");
+            var adminConvert = adminAllFromText.Split("%%%%%");
             return new Admin(int.Parse(adminConvert[0]), adminConvert[1], adminConvert[2], adminConvert[3], adminConvert[4], adminConvert[5], adminConvert[6], adminConvert[7]);
         }
     }

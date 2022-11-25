@@ -5,7 +5,7 @@ namespace SMS.menu
 {
     public class MainMenu
     {
-        public int choice;
+        private int _choice;
         public void AllMainMenu()
         {
             IAdminManager adminManager = new AdminManager();
@@ -30,83 +30,86 @@ namespace SMS.menu
 ################################################################################");
                 Console.WriteLine("\tHome>>");
                 Console.WriteLine("\tEnter 1 to Register.\n\tEnter 2 to Login.\n\tEnter 0 to Close.");
-                bool chk = false;
+                bool chk;
                 do
                 {
                     Console.Write("Enter Operation No: ");
-                    chk = int.TryParse(Console.ReadLine(), out choice);
+                    chk = int.TryParse(Console.ReadLine(), out _choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
                 } while (!chk);
-                if (choice == 1)
+                switch (_choice)
                 {
-                    // Register
-                    RegistrationMenu();
+                    case 1:
+                        // Register
+                        RegistrationMenu();
+                        break;
+                    case 2:
+                        // Login
+                        Console.WriteLine("\nMain Menu >> Login >> ");
+                        LoginMenu();
+                        break;
+                    default:
+                        // Invalid Choice
+                        // Console.Clear();
+                        Console.Write("Invalid Input.");
+                        break;
                 }
-                else if (choice == 2)
-                {
-                    // Login
-                    Console.WriteLine("\nMain Menu >> Login >> ");
-                    LoginMenu();
-                }
-                else
-                {
-                    // Invalid Choice
-                    // Console.Clear();
-                    Console.Write("Invalid Input.");
-                }
-            } while (choice != 0);
+            } while (_choice != 0);
 
         }
-        public void RegistrationMenu()
+
+        private void RegistrationMenu()
         {
             do
             {
                 Console.WriteLine("\nHome >> Register >>");
                 Console.WriteLine("\tEnter 1 Go back to Go Home. or \n\tEnter Your OneTime Registration Code for  Newly Employed Manager..");
-                bool chk = false;
+                bool chk;
                 do
                 {
                     Console.Write("Enter Operation No: ");
-                    chk = int.TryParse(Console.ReadLine(), out choice);
+                    chk = int.TryParse(Console.ReadLine(), out _choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
 
                 } while (!chk);
-                if (choice == 2546)
+                switch (_choice)
                 {
-                    // Admin
-                    AdminMenu adminMenu = new AdminMenu();
-                    adminMenu.RegisterAdminPage();
-                }
-                // else if (choice == 2)
-                // // {
-                // //     // Attendant
-                // //     Console.WriteLine("\nMain Menu >> Register >> Attendant >>");
-                // //     AttendantMenu attendantMenu = new AttendantMenu();
-                // //     attendantMenu.RegisterAttendantPage();
-                // // }
-                // // else if (choice == 3)
-                // // {
-                // //     /*
-                // //     // Customer
-                // //     Console.WriteLine("\nMain Menu >> Register >> Customer >>");
-                // //     CustomerMenu customerMenu = new CustomerMenu();
-                // //     customerMenu.RegisterCustomerPage();
-                // //     */
-                // // }
-                else if (choice == 1)
-                {
-                    // Go Back
-                    AllMainMenu();
-                }
-                else
-                {
-                    // Invalid Choice
-                    // Console.Clear();
-                    Console.WriteLine("Invalid Input.\n");
-                    RegistrationMenu();
+                    case 2546:
+                    {
+                        // Admin
+                        var adminMenu = new AdminMenu();
+                        adminMenu.RegisterAdminPage();
+                        break;
+                    }
+                    // else if (choice == 2)
+                    // // {
+                    // //     // Attendant
+                    // //     Console.WriteLine("\nMain Menu >> Register >> Attendant >>");
+                    // //     AttendantMenu attendantMenu = new AttendantMenu();
+                    // //     attendantMenu.RegisterAttendantPage();
+                    // // }
+                    // // else if (choice == 3)
+                    // // {
+                    // //     /*
+                    // //     // Customer
+                    // //     Console.WriteLine("\nMain Menu >> Register >> Customer >>");
+                    // //     CustomerMenu customerMenu = new CustomerMenu();
+                    // //     customerMenu.RegisterCustomerPage();
+                    // //     */
+                    // // }
+                    case 1:
+                        // Go Back
+                        AllMainMenu();
+                        break;
+                    default:
+                        // Invalid Choice
+                        // Console.Clear();
+                        Console.WriteLine("Invalid Input.\n");
+                        RegistrationMenu();
+                        break;
                 }
 
-            } while (choice != 0);
+            } while (_choice != 0);
         }
         public void LoginMenu()
         {
@@ -114,50 +117,52 @@ namespace SMS.menu
             {
                 Console.WriteLine("\n\tHome>> Login >> ");
                 Console.WriteLine("\tEnter 1 for Admin.\n\tEnter 2 for Attendant. \n\tEnter 3 for Customer. \n\tEnter 4 to go back to Main Menu.\n\tEnter 0 to Close");
-                bool chk = false;
+                bool chk;
                 do
                 {
                     Console.Write("Enter Operation No: ");
-                    chk = int.TryParse(Console.ReadLine(), out choice);
+                    chk = int.TryParse(Console.ReadLine(), out _choice);
                     Console.WriteLine(chk ? "" : "Invalid Input.");
                 } while (!chk);
-                if (choice == 1)
+                switch (_choice)
                 {
-                    // Admin
-                    Console.WriteLine("\nHome >> Login >> Admin");
-                    AdminMenu adminMenu = new AdminMenu();
-                    adminMenu.LoginAdminMenu();
-                }
-                else if (choice == 2)
-                {
-                    // Attendant
-                    Console.WriteLine("\nMain Menu >> Login >> Attendant");
-                    AttendantMenu attendantMenu = new AttendantMenu();
-                    attendantMenu.LoginAttendantMenu();
-                }
-                else if (choice == 3)
-                {
-                    /* OUT OFF THE PROGRAM FOR SUSTOMER
+                    case 1:
+                    {
+                        // Admin
+                        Console.WriteLine("\nHome >> Login >> Admin");
+                        var adminMenu = new AdminMenu();
+                        adminMenu.LoginAdminMenu();
+                        break;
+                    }
+                    case 2:
+                    {
+                        // Attendant
+                        Console.WriteLine("\nMain Menu >> Login >> Attendant");
+                        var attendantMenu = new AttendantMenu();
+                        attendantMenu.LoginAttendantMenu();
+                        break;
+                    }
+                    case 3:
+                        /* OUT OFF THE PROGRAM FOR SUSTOMER
                     // Customer
                     Console.WriteLine("\nMain Menu >> Login >> Customer");
                     CustomerMenu customerMenu = new CustomerMenu();
                     customerMenu.LoginCUstomerMenu();
                     */
-                }
-                else if (choice == 4)
-                {
-                    // Go Back
-                    AllMainMenu();
-                }
-                else
-                {
-                    // Invalid Choice
-                    // Console.Clear();
-                    Console.WriteLine("Invalid Input.\n");
-                    LoginMenu();
+                        break;
+                    case 4:
+                        // Go Back
+                        AllMainMenu();
+                        break;
+                    default:
+                        // Invalid Choice
+                        // Console.Clear();
+                        Console.WriteLine("Invalid Input.\n");
+                        LoginMenu();
+                        break;
                 }
 
-            } while (choice != 0);
+            } while (_choice != 0);
             Console.WriteLine();
         }
     }

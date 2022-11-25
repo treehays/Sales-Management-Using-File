@@ -4,16 +4,16 @@ namespace SMS.implementation
 {
     public class ProductManager : IProductManager
     {
-        public static List<Product> listOfProduct = new List<Product>();
-        public string productFilePath = @"./Files/product.txt";
+        private static readonly List<Product> ListOfProduct = new List<Product>();
+        private readonly string _productFilePath = @"./Files/product.txt";
         public void CreateProduct(string barCode, string productName, double price, int productQuantity)
         {
-            int id = listOfProduct.Count() + 1;
-            Product product = new Product(id, barCode, productName, price, productQuantity);
+            var id = ListOfProduct.Count + 1;
+            var product = new Product(id, barCode, productName, price, productQuantity);
             if (GetProduct(barCode) == null)
             {
-                listOfProduct.Add(product);
-                using (StreamWriter streamWriter = new StreamWriter(productFilePath, append: true))
+                ListOfProduct.Add(product);
+                using (var streamWriter = new StreamWriter(_productFilePath, append: true))
                 {
                     streamWriter.WriteLine(product.WriteToFIle());
                 }
@@ -27,11 +27,11 @@ namespace SMS.implementation
         }
         public void DeleteProduct(string barCode)
         {
-            Product product = GetProduct(barCode);
+            var product = GetProduct(barCode);
             if (product != null)
             {
                 Console.WriteLine($"{product.ProductName} Successfully deleted. ");
-                listOfProduct.Remove(product);
+                ListOfProduct.Remove(product);
                 ReWriteToFile();
             }
             else
@@ -41,18 +41,11 @@ namespace SMS.implementation
         }
         public Product GetProduct(string barCode)
         {
-            foreach (var item in listOfProduct)
-            {
-                if (item.BarCode == barCode)
-                {
-                    return item;
-                }
-            }
-            return null;
+            return ListOfProduct.FirstOrDefault(item => item.BarCode == barCode);
         }
         public void UpdateProduct(string barCode, string productName, double price, int quantity)
         {
-            Product product = GetProduct(barCode);
+            var product = GetProduct(barCode);
             if (product != null)
             {
                 // product.BarCode  = barCode;
@@ -67,7 +60,7 @@ namespace SMS.implementation
         }
         public bool UpdateProductInventory(string barCode, int quantity)
         {
-            Product product = GetProduct(barCode);
+            var product = GetProduct(barCode);
 
             if (product.ProductQuantity - quantity >= 0)
             {
@@ -84,26 +77,26 @@ namespace SMS.implementation
         }
         public void ViewAllProduct()
         {
-            foreach (var item in listOfProduct)
+            foreach (var item in ListOfProduct)
             {
                 Console.WriteLine($"{item.Id}\t{item.ProductName}\t{item.BarCode}\t{item.Price}\t{item.ProductQuantity}");
             }
         }
         public void ViewProductBelow(double price)
         {
-            var listOfProductBelow = from x in listOfProduct where x.Price < price select new { barcode = x.BarCode, productName = x.ProductName, price = x.Price };
+            var listOfProductBelow = from x in ListOfProduct where x.Price < price select new { barcode = x.BarCode, productName = x.ProductName, price = x.Price };
             foreach (var item in listOfProductBelow)
             {
-                int i = 1;
+                var i = 1;
                 Console.WriteLine($"{i++}\t{item.barcode}\t{item.productName}\t{item.price}");
             }
         }
         public void ReWriteToFile()
         {
-            File.WriteAllText(productFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(productFilePath))
+            File.WriteAllText(_productFilePath, string.Empty);
+            using (var streamWriter = new StreamWriter(_productFilePath))
             {
-                foreach (var item in listOfProduct)
+                foreach (var item in ListOfProduct)
                 {
                     streamWriter.WriteLine(item.WriteToFIle());
                 }
@@ -111,17 +104,17 @@ namespace SMS.implementation
         }
         public void ReadFromFile()
         {
-            if (!File.Exists(productFilePath))
+            if (!File.Exists(_productFilePath))
             {
-                FileStream fileStream = new FileStream(productFilePath, FileMode.CreateNew);
+                var fileStream = new FileStream(_productFilePath, FileMode.CreateNew);
                 fileStream.Close();
             }
-            using (StreamReader streamReader = new StreamReader(productFilePath))
+            using (var streamReader = new StreamReader(_productFilePath))
             {
                 while (streamReader.Peek() != -1)
                 {
-                    string productManager = streamReader.ReadLine();
-                    listOfProduct.Add(Product.ConvertToProduct(productManager));
+                    var productManager = streamReader.ReadLine();
+                    ListOfProduct.Add(Product.ConvertToProduct(productManager));
                 }
             }
         }

@@ -4,18 +4,18 @@ namespace SMS.implementation
 {
     public class AttendantManager : IAttendantManager
     {
-        public static List<Attendant> listOfAttendant = new List<Attendant>();
-        public string attendantFilePath = @"./Files/attendant.txt";
+        private static readonly List<Attendant> ListOfAttendant = new List<Attendant>();
+        private readonly string _attendantFilePath = @"./Files/attendant.txt";
         public void CreateAttendant(string firstName, string lastName, string email, string phoneNumber, string pin, string post)
         {
-            int id = listOfAttendant.Count() + 1;
+            var id = ListOfAttendant.Count + 1;
             // string staffId = "AT" + new Random(id).Next(100000).ToString();
-            Attendant attendant = new Attendant(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
+            var attendant = new Attendant(id, User.GenerateRandomId(), firstName, lastName, email, phoneNumber, pin, post);
             //    Verifying Attendant Email
             if (GetAttendant(attendant.StaffId, email) == null)
             {
-                listOfAttendant.Add(attendant);
-                using (StreamWriter streamWriter = new StreamWriter(attendantFilePath, append: true))
+                ListOfAttendant.Add(attendant);
+                using (var streamWriter = new StreamWriter(_attendantFilePath, append: true))
                 {
                     streamWriter.WriteLine(attendant.WriteToFIle());
                 }
@@ -30,11 +30,11 @@ namespace SMS.implementation
         }
         public void DeleteAttendant(string staffId)
         {
-            Attendant attendant = GetAttendant(staffId);
+            var attendant = GetAttendant(staffId);
             if (attendant != null)
             {
                 Console.WriteLine($"{attendant.FirstName} {attendant.LastName} Successfully deleted. ");
-                listOfAttendant.Remove(attendant);
+                ListOfAttendant.Remove(attendant);
                 ReWriteToFile();
             }
             else
@@ -44,47 +44,26 @@ namespace SMS.implementation
         }
         public Attendant GetAttendant(string staffId)
         {
-            foreach (var item in listOfAttendant)
-            {
-                if (item.StaffId.ToUpper() == staffId.ToUpper())
-                {
-                    return item;
-                }
-            }
-            return null;
+            return ListOfAttendant.FirstOrDefault(item => item.StaffId.ToUpper() == staffId.ToUpper());
         }
         public Attendant GetAttendant(string staffId, string email)
         {
-            foreach (var item in listOfAttendant)
-            {
-                if (item.StaffId.ToUpper() == staffId.ToUpper() || item.Email.ToUpper() == email.ToUpper())
-                {
-                    return item;
-                }
-            }
-            return null;
+            return ListOfAttendant.FirstOrDefault(item => item.StaffId.ToUpper() == staffId.ToUpper() || item.Email.ToUpper() == email.ToUpper());
         }
         public void ViewAttendant(string staffId)
         {
-            foreach (var item in listOfAttendant)
+            foreach (var item in ListOfAttendant)
             {
                 Console.WriteLine($"{item.FirstName}\t{item.LastName}\t{item.Email}\t{item.StaffId}\t{item.Post}");
             }
         }
         public Attendant Login(string staffId, string pin)
         {
-            foreach (var item in listOfAttendant)
-            {
-                if (item.StaffId.ToUpper() == staffId.ToUpper() && item.Pin == pin)
-                {
-                    return item;
-                }
-            }
-            return null;
+            return ListOfAttendant.FirstOrDefault(item => item.StaffId.ToUpper() == staffId.ToUpper() && item.Pin == pin);
         }
         public void UpdateAttendant(string staffId, string firstName, string lastName, string phoneNumber)
         {
-            Attendant attendant = GetAttendant(staffId);
+            var attendant = GetAttendant(staffId);
             if (attendant != null)
             {
                 attendant.FirstName = firstName;
@@ -98,17 +77,17 @@ namespace SMS.implementation
         }
         public void ViewAllAttendants()
         {
-            foreach (var item in listOfAttendant)
+            foreach (var item in ListOfAttendant)
             {
                 Console.WriteLine($"{item.StaffId} {item.LastName} {item.FirstName} {item.Email} {item.PhoneNumber}");
             }
         }
         public void ReWriteToFile()
         {
-            File.WriteAllText(attendantFilePath, string.Empty);
-            using (StreamWriter streamWriter = new StreamWriter(attendantFilePath))
+            File.WriteAllText(_attendantFilePath, string.Empty);
+            using (var streamWriter = new StreamWriter(_attendantFilePath))
             {
-                foreach (var item in listOfAttendant)
+                foreach (var item in ListOfAttendant)
                 {
                     streamWriter.WriteLine(item.WriteToFIle());
                 }
@@ -116,19 +95,19 @@ namespace SMS.implementation
         }
         public void ReadFromFile()
         {
-            if (!File.Exists(attendantFilePath))
+            if (!File.Exists(_attendantFilePath))
             {
-                FileStream fileStream = new FileStream(attendantFilePath, FileMode.CreateNew);
+                var fileStream = new FileStream(_attendantFilePath, FileMode.CreateNew);
                 fileStream.Close();
             }
-            using (StreamReader streamReader = new StreamReader(attendantFilePath))
+            using (var streamReader = new StreamReader(_attendantFilePath))
             {
                 while (streamReader.Peek() != -1)
                 {
                     // if (streamReader.Peek() == -1)
                     // {
-                        string attendantManager = streamReader.ReadLine();
-                        listOfAttendant.Add(Attendant.ConvertToAttendant(attendantManager));
+                        var attendantManager = streamReader.ReadLine();
+                        ListOfAttendant.Add(Attendant.ConvertToAttendant(attendantManager));
                     // }
                 }
             }
